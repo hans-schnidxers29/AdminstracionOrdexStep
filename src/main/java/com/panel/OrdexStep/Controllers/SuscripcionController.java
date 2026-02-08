@@ -13,6 +13,8 @@ import com.panel.OrdexStep.Service.SuscripcionService;
 import com.panel.OrdexStep.security.ComponentTask;
 import lombok.RequiredArgsConstructor;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +59,12 @@ public class SuscripcionController {
             
             TipoSuscripcion tipo = TipoSuscripcion.valueOf(dto.getTipoSuscripcion());
             nuevaSub.setTipoSuscripcion(tipo);
-            nuevaSub.setFechaFin(tipo.calcularFechaVencimiento(dto.getFechaInicio()));
+
+            if (tipo.equals(TipoSuscripcion.valueOf("PRUEBAS"))){
+                nuevaSub.setFechaFin(dto.getFechaFin());
+            }else {
+                nuevaSub.setFechaFin(tipo.calcularFechaVencimiento(dto.getFechaInicio()));
+            }
             
             BigDecimal monto = plan.getPrecio().multiply(new BigDecimal(tipo.getMeses()));
             nuevaSub.setMontoPagado(monto);

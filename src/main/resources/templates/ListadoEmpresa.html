@@ -48,7 +48,7 @@
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Cambiar Plan</label>
-                <select id="selectPlan" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                <select id="selectPlan" onchange="togglePlanPruebas()" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </select>
             </div>
 
@@ -68,16 +68,23 @@
                     <option value="MENSUAL">Mensual (1 mes)</option>
                     <option value="TRIMESTRAL">Trimestral (3 meses)</option>
                     <option value="ANUAL">Anual (12 meses)</option>
+                    <option value="PRUEBAS">Pruebas</option>
                 </select>
             </div>
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Inicio de Suscripción</label>
                 <input type="date" id="fechaInicio" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                <p id="infoFechaFin" class="text-xs text-gray-500 mt-1">* La fecha de fin se calculará según el tipo de suscripción.</p>
             </div>
 
-            <div class="flex space-x-3">
+            <div id="campoFechaFinManual" class="mb-4 hidden">
+                <label class="block text-sm font-bold text-indigo-600 mb-1">Fecha Fin (Personalizada)</label>
+                <input type="date" id="fechaFinManual" class="w-full border-indigo-400 rounded-lg shadow-sm focus:ring-indigo-500 bg-indigo-50">
+            </div>
+
+            <p id="infoFechaFin" class="text-xs text-gray-500 mt-1">* La fecha de fin se calculará según el tipo de suscripción automáticamente.</p>
+
+            <div class="flex space-x-3 mt-4">
                 <button type="button" onclick="cerrarModal()" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">Cancelar</button>
                 <button type="submit" class="flex-1 bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg">Guardar Cambios</button>
             </div>
@@ -87,6 +94,22 @@
 
 <script>
     const API = 'http://localhost:8082/api';
+
+    // Cambio: Nueva función para mostrar/ocultar fecha fin manual
+    function togglePlanPruebas() {
+        const select = document.getElementById('selectPlan');
+        const nombrePlan = select.options[select.selectedIndex]?.text;
+        const divManual = document.getElementById('campoFechaFinManual');
+        const info = document.getElementById('infoFechaFin');
+
+        if (nombrePlan === "Plan Pruebas") {
+            divManual.classList.remove('hidden');
+            info.classList.add('hidden');
+        } else {
+            divManual.classList.add('hidden');
+            info.classList.remove('hidden');
+        }
+    }
 
     async function cargarEmpresas() {
         try {
@@ -123,17 +146,17 @@
         document.getElementById('modalNombreEmpresa').innerText = empresa.nombre;
         document.getElementById('modalIdEmpresa').value = empresa.id;
         document.getElementById('checkEstado').checked = empresa.estado;
-        
-        // Establecer fecha de hoy por defecto
+
         document.getElementById('fechaInicio').value = new Date().toISOString().split('T')[0];
 
-        // Cargar planes en el select si no se han cargado
         const select = document.getElementById('selectPlan');
         const resPlanes = await axios.get(`${API}/planes`);
         select.innerHTML = resPlanes.data.map(p => `
                 <option value="${p.id}" ${empresa.plan && p.id === empresa.plan.id ? 'selected' : ''}>${p.nombre}</option>
             `).join('');
 
+        // Cambio: Ejecutar toggle al abrir por si ya es Plan Pruebas
+        togglePlanPruebas();
         document.getElementById('modalGestion').classList.remove('hidden');
     }
 
@@ -146,44 +169,42 @@
         const id = document.getElementById('modalIdEmpresa').value;
         const fechaInicioVal = document.getElementById('fechaInicio').value;
         const estadoActivo = document.getElementById('checkEstado').checked;
+        const selectPlan = document.getElementById('selectPlan');
+        const nombrePlan = selectPlan.options[selectPlan.selectedIndex].text;
 
-        // Si se va a desactivar, simplemente actualizamos la empresa sin crear suscripción (o según lógica de negocio)
-        // Pero el usuario pidió gestionar y desactivar.
-        
         const payload = {
             empresaId: id,
-            planId: document.getElementById('selectPlan').value,
+            planId: selectPlan.value,
             activo: estadoActivo,
             fechaInicio: fechaInicioVal || new Date().toISOString().split('T')[0],
             tipoSuscripcion: document.getElementById('selectTipoSuscripcion').value,
             estadoSuscripcion: estadoActivo ? "ACTIVO" : "SUSPENDIDO"
         };
 
-        const fechaInicio = new Date(payload.fechaInicio);
-        const fechaFin = new Date(fechaInicio);
-        
-        const meses = {
-            'MENSUAL': 1,
-            'TRIMESTRAL': 3,
-            'ANUAL': 12
-        }[payload.tipoSuscripcion];
-
-        fechaFin.setMonth(fechaFin.getMonth() + meses);
-        
         const formatDate = (date) => {
             const d = new Date(date);
             let month = '' + (d.getMonth() + 1);
-            let day = '' + d.getDate();
+            let day = '' + (d.getDate() + 1); // Ajuste de zona horaria común en inputs
             const year = d.getFullYear();
-
             if (month.length < 2) month = '0' + month;
             if (day.length < 2) day = '0' + day;
-
             return [year, month, day].join('-');
         };
-        
-        payload.fechaInicio = formatDate(fechaInicio);
-        payload.fechaFin = formatDate(fechaFin);
+
+        // Cambio: Lógica condicional para Fecha Fin
+        if (nombrePlan === "Plan Pruebas") {
+            const manualFin = document.getElementById('fechaFinManual').value;
+            if(!manualFin) return alert("Seleccione fecha fin para Plan Pruebas");
+            payload.fechaFin = manualFin;
+        } else {
+            const fechaInicio = new Date(payload.fechaInicio);
+            const fechaFin = new Date(fechaInicio);
+            const meses = { 'MENSUAL': 1, 'TRIMESTRAL': 3, 'ANUAL': 12 , 'PRUEBAS' : 0}[payload.tipoSuscripcion];
+            fechaFin.setMonth(fechaFin.getMonth() + meses);
+            payload.fechaFin = formatDate(fechaFin);
+        }
+
+        payload.fechaInicio = formatDate(new Date(payload.fechaInicio));
 
         try {
             await axios.post(`${API}/suscripcion/crear`, payload);

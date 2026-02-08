@@ -10,7 +10,8 @@ import java.time.LocalDate;
 public enum TipoSuscripcion {
     ANUAL(12),
     MENSUAL(1),
-    TRIMESTRAL(3);
+    TRIMESTRAL(3),
+    PRUEBAS(0);
 
     private final int meses;
 
