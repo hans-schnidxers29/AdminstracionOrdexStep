@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/suscripcion")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class SuscripcionController {
 
     private final ComponentTask componentTask;
