@@ -2,6 +2,7 @@ package com.panel.OrdexStep.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 import java.util.List;
@@ -33,6 +34,9 @@ public class Empresa {
 
     @Column(name = "nit", unique = true)
     private String nit;
+
+    @Email(message = "debe ser un correo legitimo")
+    private String correoEmpresa;
 
 
 }

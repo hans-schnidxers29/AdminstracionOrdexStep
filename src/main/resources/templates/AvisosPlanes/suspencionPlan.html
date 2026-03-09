@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviso de Suspensión - Ordex</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f7; color: #333333;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
+    <tr>
+        <td align="center" style="padding: 20px 0;">
+            <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+
+                <tr>
+                    <td align="center" style="background-color: #ffffff; line-height: 0;">
+                        <img src="cid:logoOrdex"
+                             alt="Ordex Logo"
+                             width="600"
+                             style="display: block; width: 100%; max-width: 600px; height: auto; border: 0; -webkit-user-select: none; -webkit-touch-callout: none;"
+                             oncontextmenu="return false;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="background-color: #e53e3e; padding: 10px; text-align: center; color: #ffffff; font-weight: bold; font-size: 18px;">
+                        AVISO DE SUSPENSIÓN DE PLAN
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 40px;">
+                        <h1 style="font-size: 22px; margin-top: 0; color: #1a202c;">
+                            Estimado/a <span th:text="${nombre}">Cliente</span>,
+                        </h1>
+
+                        <p style="font-size: 16px; line-height: 1.6; color: #4a5568;">
+                            Tu plan está próximo a vencer. Para evitar la interrupción de tus servicios en <strong>Ordex</strong>, puedes realizar el pago escaneando el código QR a continuación.
+                        </p>
+
+                        <table border="0" cellpadding="10" cellspacing="0" width="100%" style="background-color: #f7fafc; border-radius: 5px; margin: 20px 0;">
+                            <tr>
+                                <td><strong>Servicio:</strong></td>
+                                <td th:text="${plan}">Plan Estándar</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fecha de corte:</strong></td>
+                                <td style="color: #e53e3e;"><strong th:text="${fecha}">01/01/2026</strong></td>
+                            </tr>
+                        </table>
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 20px 0; text-align: center;">
+                            <tr>
+                                <td align="center" style="padding: 0; line-height: 0; background-color: #4c51bf;">
+                                    <p style="margin: 0; padding: 15px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">
+                                        ESCANEA PARA PAGAR AHORA
+                                    </p>
+                                    <img src="cid:qrPago" alt="QR de Pago" width="600"
+                                         style="display: block; width: 100%; max-width: 600px; height: auto; border: 0;">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="font-size: 14px; color: #718096; text-align: center; margin-top: 10px;">
+                            Una vez realizado el pago, mandar soporte y su plan será activado.
+                        </p>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 20px; background-color: #edf2f7; text-align: center; font-size: 12px; color: #718096;">
+                        <p style="margin: 0;">© 2026 Ordex - Gestión Inteligente.</p>
+                        <p style="margin: 5px 0 0;">¿Necesitas ayuda? <a href="mailto:haxliou@gmail.com"  style="color: #4c51bf;">Contactar a soporte</a></p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

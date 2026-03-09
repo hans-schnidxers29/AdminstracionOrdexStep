@@ -4,6 +4,7 @@ import com.panel.OrdexStep.Entity.Enum.EstadoSubcripcion;
 import com.panel.OrdexStep.Entity.Suscripcion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -18,6 +19,9 @@ public interface SuscripcionRepository extends JpaRepository<Suscripcion,Long> {
     List<Suscripcion>findSubscriptionsToSuspend(LocalDate today, EstadoSubcripcion estado);
 
     Optional<Suscripcion> findFirstByEmpresaIdOrderByFechaFinDesc(Long empresaId);
+
+    @Query("SELECT DISTINCT s.empresa.correoEmpresa FROM Suscripcion s WHERE s.fechaFin <= :today AND s.estadoSub = :estado")
+    List<String> findEmailsOfSubscriptionsToSuspend(LocalDate today, EstadoSubcripcion estado);
 
 }
 

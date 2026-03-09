@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suscripción Suspendida - Ordex</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #f1f5f9; color: #334155;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
+    <tr>
+        <td align="center" style="padding: 20px 0;">
+            <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
+
+                <tr>
+                    <td align="center" style="line-height: 0;">
+                        <img src="cid:logoOrdex" alt="Ordex Logo" width="600" style="display: block; width: 100%; max-width: 600px; height: auto; border: 0;">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="background-color: #dc2626; padding: 15px; text-align: center; color: #ffffff; font-weight: bold; font-size: 18px; letter-spacing: 1px;">
+                        ⚠️ ACCESO SUSPENDIDO
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 40px;">
+                        <h1 style="font-size: 22px; margin-top: 0; color: #1e293b; text-align: center;">
+                            Atención, <span th:text="${nombre}">Empresa</span>
+                        </h1>
+
+                        <p style="font-size: 16px; line-height: 1.6; color: #475569; text-align: center;">
+                            Te informamos que el acceso a tus servicios ha sido restringido debido a que tu suscripción expiró el día <strong th:text="${fecha}">01/01/2026</strong>.
+                        </p>
+
+                        <table border="0" cellpadding="12" cellspacing="0" width="100%" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin: 25px 0;">
+                            <tr>
+                                <td style="font-size: 14px; color: #64748b;">Plan expirado:</td>
+                                <td align="right" style="font-size: 14px; font-weight: bold; color: #1e293b;" th:text="${plan}">Plan Estándar</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 14px; color: #64748b;">Fecha de vencimiento:</td>
+                                <td align="right" style="font-size: 14px; font-weight: bold; color: #dc2626;" th:text="${fecha}">01/01/2026</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 14px; color: #64748b;">Estado actual:</td>
+                                <td align="right" style="font-size: 12px; font-weight: bold;">
+                                    <span style="background-color: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 4px;" th:text="${estado}">SUSPENDIDO</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="font-size: 15px; line-height: 1.6; color: #475569; text-align: center;">
+                            Para reactivar tu cuenta y continuar gestionando tu operación, puedes realizar el pago a través del siguiente medio:
+                        </p>
+
+                        <div style="margin-top: 30px; text-align: center; border: 2px dashed #94a3b8; border-radius: 12px; padding: 20px;">
+                            <span style="font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase;">Escanea para activar ahora</span>
+                            <div style="padding: 15px 0;">
+                                <img src="cid:qrPago" alt="QR Nequi" width="350" style="display: block; margin: 0 auto; border-radius: 10px;">
+                            </div>
+                            <p style="font-size: 13px; color: #64748b; margin: 0;">Una vez realizado el pago, envía tu comprobante a soporte.</p>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding: 25px; background-color: #f8fafc; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0;">
+                        <p style="margin: 0; font-weight: bold;">© 2026 Ordex - Gestión Inteligente.</p>
+                        <p style="margin: 5px 0 0;">Si ya realizaste el pago, omite este mensaje.</p>
+                        <p style="margin: 15px 0 0;">
+                            <a href="mailto:soporte@ordex.com" style="color: #2563eb; text-decoration: none;">Contactar Soporte Técnico</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

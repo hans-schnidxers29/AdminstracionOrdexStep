@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class VistaEmpresaController {
 
 
-    @GetMapping("/Lista")
+    @GetMapping("/lista")
     public String MostrarFromListaEmpresas(){
-        return "ListadoEmpresa";
+        return "Empresa/ListadoEmpresa";
     }
 }
