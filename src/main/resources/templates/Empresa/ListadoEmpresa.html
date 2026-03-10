@@ -88,7 +88,7 @@
 
     <script th:inline="javascript">
         // Se recomienda mantener la lógica aquí para que se ejecute al cargar este fragmento
-        const CONTEXT_PATH = /*[[${#httpServletRequest.contextPath}]]*/ '';
+        const CONTEXT_PATH = '/admin';
         const API = CONTEXT_PATH + '/api'; // URL relativa con context-path
 
         const token = document.querySelector('input[name="_csrf"]')?.value;
