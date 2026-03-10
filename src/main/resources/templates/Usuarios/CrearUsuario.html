@@ -68,6 +68,9 @@
   </div>
 
   <script th:inline="javascript">
+    const CONTEXT_PATH = /*[[${#httpServletRequest.contextPath}]]*/ '';
+    const API = CONTEXT_PATH + '/api';
+
     // 1. FUNCIONALIDAD DEL MODAL
     function toggleModal(show) {
       const modal = document.getElementById('modalUsuario');
@@ -78,7 +81,7 @@
     // 2. CARGAR LISTA DE USUARIOS
     async function cargarUsuarios() {
       try {
-        const response = await axios.get('/api/usuarios/listar');
+        const response = await axios.get(`${API}/usuarios/listar`);
         const tbody = document.getElementById('tablaUsuarios');
         tbody.innerHTML = ''; // Limpiar tabla
 
@@ -110,7 +113,7 @@
       };
 
       try {
-        await axios.post('/api/usuarios/crear', payload);
+        await axios.post(`${API}/usuarios/crear`, payload);
         alert('¡Administrador creado!');
         toggleModal(false); // Cerrar modal
         cargarUsuarios();   // Recargar la tabla automáticamente

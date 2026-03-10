@@ -24,7 +24,7 @@ public class SecurityApp {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/css/**", "/js/**", "/img/**", "/adminlte/**").permitAll()
-                                .requestMatchers("/login", "/registro", "/api/**", "/admin/api/**").permitAll()
+                                .requestMatchers("/login", "/registro", "/api/**").permitAll()
                                 .anyRequest().authenticated()
                 ).formLogin(form -> form
                         .loginPage("/login")
