@@ -1,22 +1,37 @@
 package com.panel.OrdexStep.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
-import java.util.List;
+import java.util.Map;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FacturaResponse {
-    private boolean status;
+
+    private String status;
     private String message;
-    private DataResponse data;
+    private Object data;
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class DataResponse {
-        private String bill_number; // Número de factura DIAN
-        private String cufe;        // Código Único de Factura Electrónica
-        private String qr;          // Texto para generar el código QR
-        private String url_pdf;     // Link para ver la factura
-        private String url_xml;     // Archivo técnico
-        private List<String> errors; // Errores si la DIAN rechaza
+        private BillData bill;
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class BillData {
+        private String number;           // Número de factura
+        private String cufe;             // Código DIAN
+        private String qr;
+        private String reference_code;
+        @JsonProperty("id")
+        private Long id;
+
     }
 }

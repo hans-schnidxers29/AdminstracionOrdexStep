@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "planes") // Esta tabla se creará en tu DB
-@Data // Si usas Lombok, si no, genera Getters y Setters
+@Table(name = "planes")
+@Data
 public class Plan {
 
     @Id
@@ -47,4 +49,12 @@ public class Plan {
     // Auditoría básica
     @Column(name = "activo")
     private Boolean activo = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "plan_modulo",
+            joinColumns = @JoinColumn(name = "plan_id"),
+            inverseJoinColumns = @JoinColumn(name = "modulo_id")
+    )
+    private Set<ModulosAcceso> modulosPermitidos = new HashSet<>();
 }

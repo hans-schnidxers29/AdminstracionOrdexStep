@@ -21,10 +21,13 @@ public class SecurityApp {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers( "/api/facturas/emitir/**","/api/facturas/actualizar/logo**","/api/facturas/emitir-nota/**") // ← agrega esto
+                )
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/css/**", "/js/**", "/img/**", "/adminlte/**").permitAll()
-                                .requestMatchers("/login", "/registro", "/api/**").permitAll()
+                                .requestMatchers("/login", "/registro", "/api/**","/api/facturas/**").permitAll()
                                 .anyRequest().authenticated()
                 ).formLogin(form -> form
                         .loginPage("/login")
