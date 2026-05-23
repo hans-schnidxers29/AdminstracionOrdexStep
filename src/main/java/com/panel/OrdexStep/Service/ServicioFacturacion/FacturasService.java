@@ -25,7 +25,7 @@ public class FacturasService {
 
     private final String URL_NOTA_CREDITO = "https://api-sandbox.factus.com.co/v1/credit-notes/validate";
 
-    private final String URL_DOCUMENTO_SOPORTE = "https://api-sandbox.factus.com.co/v1/documents/validate";
+    private final String URL_DOCUMENTO_SOPORTE = "https://api-sandbox.factus.com.co/v1/support-documents/validate";
 
     @Autowired
     private FactusAuthService authService;

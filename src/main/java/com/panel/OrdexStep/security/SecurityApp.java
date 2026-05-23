@@ -22,7 +22,7 @@ public class SecurityApp {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers( "/api/facturas/emitir/**","/api/facturas/actualizar/logo**","/api/facturas/emitir-nota/**") // ← agrega esto
+                        .ignoringRequestMatchers( "/api/facturas/emitir/**","/api/facturas/actualizar/logo**","/api/facturas/emitir-nota/**", "/api/facturas/emitir/documento-soporte/**") // ← agrega esto
                 )
                 .authorizeHttpRequests(
                         auth -> auth

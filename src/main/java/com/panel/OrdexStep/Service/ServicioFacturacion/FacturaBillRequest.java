@@ -12,7 +12,6 @@ public class FacturaBillRequest {
     private String payment_form;       // "1" = Contado, "2" = Crédito
     private String payment_due_date;   // "YYYY-MM-DD"
     private String payment_method_code; // "10" = Efectivo, "42" = Débito, etc.
-
     private Customer customer;
     private List<Item> items;
 
