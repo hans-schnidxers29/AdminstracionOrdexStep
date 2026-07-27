@@ -14,7 +14,7 @@ public class ComponentTask {
         this.suscripcionService = suscripcionService;
     }
 
-    @Scheduled(cron = "0 00 21 * * *")
+    @Scheduled(cron = "0 00 19 * * *")
     public void SuscripcionVerificar() {
 
         LocalDate fechaVencimiento = LocalDate.now();
